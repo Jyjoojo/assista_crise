@@ -1,0 +1,30 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "authenticationType": "jwt",
+    "baseName": "assistaCrise",
+    "buildTool": "maven",
+    "cacheProvider": "ehcache",
+    "clientBundler": "webpack",
+    "clientFramework": "angular",
+    "clientTestFrameworks": ["cypress"],
+    "clientTheme": "none",
+    "creationTimestamp": 1776944669903,
+    "cypressAudit": true,
+    "cypressCoverage": true,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "enableHibernateCache": true,
+    "enableTranslation": true,
+    "entities": [],
+    "jhipsterVersion": "9.0.0",
+    "jwtSecretKey": "OWE3NzBlMGU2MDQyYjYxMDNkOWIzOTI3NzczYTBiYzg3MGY0ZGViNDhkYWQxNTI0M2JkZWY5MjIyZWQ0ZWVhZWEzZjhjMzAzMTQxYTliNDE0NzQzODJlNjFlYzY5Mjc5NjdmYTgwZTg0YmRkOTk0YzQ2OTQ0NzUwZjIyMzQyZmE=",
+    "languages": ["fr", "en"],
+    "nativeLanguage": "fr",
+    "packageName": "fr.assistacrise",
+    "prodDatabaseType": "postgresql",
+    "reactive": false,
+    "testFrameworks": ["gatling", "cucumber", "cypress"],
+    "withAdminUi": true
+  }
+}
