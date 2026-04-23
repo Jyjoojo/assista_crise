@@ -1,0 +1,84 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (moderation(); as moderationRef) {
+      <div>
+        <h2 data-cy="moderationDetailsHeading"><span jhiTranslate="assistaCriseApp.moderation.detail.title">Moderation</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ moderationRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.moderation.motif">Motif</span></dt>
+          <dd>
+            <span>{{ moderationRef.motif }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.moderation.dateModeration">Date Moderation</span></dt>
+          <dd>
+            <span>{{ moderationRef.dateModeration | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.moderation.action">Action</span></dt>
+          <dd>
+            <span [jhiTranslate]="'assistaCriseApp.ActionModeration.' + (moderationRef.action ?? 'null')">{{
+              {
+                null: '',
+                AVERTISSEMENT: 'AVERTISSEMENT',
+                SUPPRESSION_ANNONCE: 'SUPPRESSION_ANNONCE',
+                BANNISSEMENT_UTILISATEUR: 'BANNISSEMENT_UTILISATEUR',
+                EXCLUSION_TEMPORAIRE: 'EXCLUSION_TEMPORAIRE',
+              }[moderationRef.action ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.moderation.administrateur">Administrateur</span></dt>
+          <dd>
+            @if (moderation()!.administrateur) {
+              <div>
+                <a [routerLink]="['/utilisateur', moderation()!.administrateur?.id, 'view']">{{ moderationRef.administrateur?.login }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.moderation.demande">Demande</span></dt>
+          <dd>
+            @if (moderation()!.demande) {
+              <div>
+                <a [routerLink]="['/demande', moderation()!.demande?.id, 'view']">{{ moderationRef.demande?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.moderation.offre">Offre</span></dt>
+          <dd>
+            @if (moderation()!.offre) {
+              <div>
+                <a [routerLink]="['/offre', moderation()!.offre?.id, 'view']">{{ moderationRef.offre?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.moderation.utilisateurCible">Utilisateur Cible</span></dt>
+          <dd>
+            @if (moderation()!.utilisateurCible) {
+              <div>
+                <a [routerLink]="['/utilisateur', moderation()!.utilisateurCible?.id, 'view']">{{
+                  moderationRef.utilisateurCible?.login
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/moderation', moderationRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

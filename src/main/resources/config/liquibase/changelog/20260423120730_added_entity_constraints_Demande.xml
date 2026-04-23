@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity Demande.
+    -->
+    <changeSet id="20260423120730-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="sinistre_id"
+                                 baseTableName="demande"
+                                 constraintName="fk_demande__sinistre_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="utilisateur"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="crise_id"
+                                 baseTableName="demande"
+                                 constraintName="fk_demande__crise_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="crise"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="demande_id"
+                                 baseTableName="rel_demande__offre"
+                                 constraintName="fk_rel_demande__offre__demande_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="demande"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="offre_id"
+                                 baseTableName="rel_demande__offre"
+                                 constraintName="fk_rel_demande__offre__offre_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="offre"
+                                 />
+    </changeSet>
+</databaseChangeLog>

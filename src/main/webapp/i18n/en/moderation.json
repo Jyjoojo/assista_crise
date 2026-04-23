@@ -1,0 +1,30 @@
+{
+  "assistaCriseApp": {
+    "moderation": {
+      "home": {
+        "title": "Moderations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Moderation",
+        "createOrEditLabel": "Create or edit a Moderation",
+        "notFound": "No Moderations found"
+      },
+      "created": "A new Moderation is created with identifier {{ param }}",
+      "updated": "A Moderation is updated with identifier {{ param }}",
+      "deleted": "A Moderation is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Moderation {{ id }}?"
+      },
+      "detail": {
+        "title": "Moderation"
+      },
+      "id": "ID",
+      "motif": "Motif",
+      "dateModeration": "Date Moderation",
+      "action": "Action",
+      "administrateur": "Administrateur",
+      "demande": "Demande",
+      "offre": "Offre",
+      "utilisateurCible": "Utilisateur Cible"
+    }
+  }
+}

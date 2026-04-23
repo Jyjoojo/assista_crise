@@ -1,0 +1,214 @@
+// ─────────────────────────────────────────────
+// AssistaCrise - JDL (JHipster Domain Language)
+// Exercice 2 - Génie Logiciel 2025-2026
+// ─────────────────────────────────────────────
+
+// ─────────────────── ENUMERATIONS ───────────────────
+
+enum RoleUtilisateur {
+    SINISTRE,
+    CITOYEN_AIDANT,
+    AUTORITE_LOCALE,
+    AGENT_AUTORITE,
+    SECOURISTE,
+    ADMINISTRATEUR
+}
+
+enum TypeCrise {
+    FEU_DE_FORET,
+    INONDATION,
+    GLISSEMENT_DE_TERRAIN,
+    ACCIDENT_INDUSTRIEL,
+    AUTRE
+}
+
+enum StatutCrise {
+    ACTIVE,
+    FERMEE,
+    ARCHIVEE
+}
+
+enum StatutDemande {
+    OUVERTE,
+    EN_COURS_DE_RESOLUTION,
+    RESOLUE,
+    FERMEE
+}
+
+enum StatutOffre {
+    DISPONIBLE,
+    EN_COURS,
+    CLOTUREE
+}
+
+enum ActionModeration {
+    AVERTISSEMENT,
+    SUPPRESSION_ANNONCE,
+    BANNISSEMENT_UTILISATEUR,
+    EXCLUSION_TEMPORAIRE
+}
+
+// ─────────────────── ENTITIES ───────────────────
+
+entity Utilisateur {
+    login           String      required unique minlength(3) maxlength(50)
+    email           String      required unique pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+    motDePasse      String      required minlength(8) maxlength(100)
+    prenom          String      required maxlength(50)
+    nom             String      required maxlength(50)
+    telephone       String      maxlength(20)
+    role            RoleUtilisateur required
+    actif           Boolean     required
+    dateInscription Instant     required
+    dateBannissement Instant
+    estBanni        Boolean     required
+}
+
+entity Crise {
+    titre           String      required maxlength(200)
+    description     String      maxlength(2000)
+    type            TypeCrise   required
+    statut          StatutCrise required
+    dateDebut       Instant     required
+    dateFermeture   Instant
+    latitude        Double      required min(-90) max(90)
+    longitude       Double      required min(-180) max(180)
+    rayonKm         Double      min(0)
+}
+
+entity Demande {
+    titre           String          required maxlength(200)
+    description     String          required maxlength(2000)
+    statut          StatutDemande   required
+    dateCreation    Instant         required
+    dateMiseAJour   Instant
+    dateFermeture   Instant
+    latitude        Double          min(-90) max(90)
+    longitude       Double          min(-180) max(180)
+    estArchivee     Boolean         required
+    dateDeferencement Instant
+}
+
+entity Offre {
+    titre           String      required maxlength(200)
+    description     String      required maxlength(2000)
+    statut          StatutOffre required
+    dateCreation    Instant     required
+    dateMiseAJour   Instant
+    latitude        Double      min(-90) max(90)
+    longitude       Double      min(-180) max(180)
+    estArchivee     Boolean     required
+    dateDeferencement Instant
+}
+
+entity Information {
+    titre           String      required maxlength(200)
+    contenu         String      required maxlength(5000)
+    datePublication Instant     required
+    dateMiseAJour   Instant
+    estVisible      Boolean     required
+}
+
+entity Salon {
+    dateCreation    Instant     required
+}
+
+entity Message {
+    contenu         String      required maxlength(2000)
+    dateEnvoi       Instant     required
+    estModere       Boolean     required
+}
+
+entity Moderation {
+    motif           String          required maxlength(500)
+    dateModeration  Instant         required
+    action          ActionModeration required
+}
+
+// ─────────────────── RELATIONSHIPS ───────────────────
+
+// Autorité locale déclare une Crise
+relationship ManyToOne {
+    Crise{declarant(login) required} to Utilisateur
+}
+
+// Sinistré rédige des Demandes
+relationship ManyToOne {
+    Demande{sinistre(login) required} to Utilisateur
+}
+
+// Autorité locale redirige des Demandes
+relationship ManyToOne {
+    Demande{crise(titre) required} to Crise
+}
+
+// Offre rattachée à une Crise
+relationship ManyToOne {
+    Offre{crise(titre) required} to Crise
+}
+
+// Citoyen aidant propose des Offres
+relationship ManyToOne {
+    Offre{aidant(login) required} to Utilisateur
+}
+
+// Information publiée par une Autorité pour une Crise
+relationship ManyToOne {
+    Information{crise(titre) required} to Crise
+    Information{auteur(login) required} to Utilisateur
+}
+
+// Mise en relation Demande <-> Offre (un aidant peut répondre à plusieurs demandes)
+relationship ManyToMany {
+    Demande{offre} to Offre{demande}
+}
+
+// Salon lié à une Demande (1 demande -> 0..1 salon)
+relationship OneToOne {
+    Salon{demande required} to Demande
+}
+
+// Messages dans un Salon
+relationship ManyToOne {
+    Message{salon required} to Salon
+    Message{auteur(login) required} to Utilisateur
+}
+
+// Participation des utilisateurs à un Salon
+relationship ManyToMany {
+    Salon{participant(login)} to Utilisateur{salon}
+}
+
+// Modération par un Administrateur
+relationship ManyToOne {
+    Moderation{administrateur(login) required} to Utilisateur
+}
+
+// Modération d'une Demande (optionnel)
+relationship ManyToOne {
+    Moderation{demande} to Demande
+}
+
+// Modération d'une Offre (optionnel)
+relationship ManyToOne {
+    Moderation{offre} to Offre
+}
+
+// Modération ciblant un utilisateur banni
+relationship ManyToOne {
+    Moderation{utilisateurCible(login)} to Utilisateur
+}
+
+// ─────────────────── OPTIONS ───────────────────
+
+// Pagination pour les entités avec potentiellement beaucoup de données
+paginate Demande, Offre, Message, Information, Moderation with pagination
+
+// DTOs pour toutes les entités
+dto * with mapstruct
+
+// Services
+service * with serviceImpl
+
+// Filtres de recherche
+filter Demande, Offre, Crise, Information

@@ -1,0 +1,184 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-moderation-heading"
+        data-cy="ModerationCreateUpdateHeading"
+        jhiTranslate="assistaCriseApp.moderation.home.createOrEditLabel"
+      >
+        Créer ou éditer un Moderation
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let motifRef = editForm.get('motif')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_motif" jhiTranslate="assistaCriseApp.moderation.motif">Motif</label>
+          <input type="text" class="form-control" name="motif" id="field_motif" data-cy="motif" formControlName="motif" />
+          @if (motifRef.invalid && (motifRef.dirty || motifRef.touched)) {
+            <div>
+              @if (editForm.get('motif')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+              @if (editForm.get('motif')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '500' }"
+                  >Ce champ doit faire au maximum 500 caractères.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let dateModerationRef = editForm.get('dateModeration')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_dateModeration" jhiTranslate="assistaCriseApp.moderation.dateModeration"
+            >Date Moderation</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateModeration"
+              data-cy="dateModeration"
+              type="datetime-local"
+              class="form-control"
+              name="dateModeration"
+              formControlName="dateModeration"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (dateModerationRef.invalid && (dateModerationRef.dirty || dateModerationRef.touched)) {
+            <div>
+              @if (editForm.get('dateModeration')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('dateModeration')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >Ce champ doit être une date et une heure.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let actionRef = editForm.get('action')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_action" jhiTranslate="assistaCriseApp.moderation.action">Action</label>
+          <select class="form-control" name="action" formControlName="action" id="field_action" data-cy="action">
+            <option [ngValue]="null">{{ 'assistaCriseApp.ActionModeration.null' | translate }}</option>
+            @for (actionModeration of actionModerationValues; track $index) {
+              <option [value]="actionModeration">{{ 'assistaCriseApp.ActionModeration.' + actionModeration | translate }}</option>
+            }
+          </select>
+          @if (actionRef.invalid && (actionRef.dirty || actionRef.touched)) {
+            <div>
+              @if (editForm.get('action')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_administrateur" jhiTranslate="assistaCriseApp.moderation.administrateur"
+            >Administrateur</label
+          >
+          <select
+            class="form-control"
+            id="field_administrateur"
+            data-cy="administrateur"
+            name="administrateur"
+            formControlName="administrateur"
+            [compareWith]="compareUtilisateur"
+          >
+            @if (!editForm.get('administrateur')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (utilisateurOption of utilisateursSharedCollection(); track $index) {
+              <option [ngValue]="utilisateurOption">{{ utilisateurOption.login }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['administrateur'])!.invalid &&
+          (editForm.get(['administrateur'])!.dirty || editForm.get(['administrateur'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['administrateur'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_demande" jhiTranslate="assistaCriseApp.moderation.demande">Demande</label>
+          <select
+            class="form-control"
+            id="field_demande"
+            data-cy="demande"
+            name="demande"
+            formControlName="demande"
+            [compareWith]="compareDemande"
+          >
+            <option [ngValue]="null"></option>
+            @for (demandeOption of demandesSharedCollection(); track $index) {
+              <option [ngValue]="demandeOption">{{ demandeOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_offre" jhiTranslate="assistaCriseApp.moderation.offre">Offre</label>
+          <select class="form-control" id="field_offre" data-cy="offre" name="offre" formControlName="offre" [compareWith]="compareOffre">
+            <option [ngValue]="null"></option>
+            @for (offreOption of offresSharedCollection(); track $index) {
+              <option [ngValue]="offreOption">{{ offreOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_utilisateurCible" jhiTranslate="assistaCriseApp.moderation.utilisateurCible"
+            >Utilisateur Cible</label
+          >
+          <select
+            class="form-control"
+            id="field_utilisateurCible"
+            data-cy="utilisateurCible"
+            name="utilisateurCible"
+            formControlName="utilisateurCible"
+            [compareWith]="compareUtilisateur"
+          >
+            <option [ngValue]="null"></option>
+            @for (utilisateurOption of utilisateursSharedCollection(); track $index) {
+              <option [ngValue]="utilisateurOption">{{ utilisateurOption.login }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span jhiTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

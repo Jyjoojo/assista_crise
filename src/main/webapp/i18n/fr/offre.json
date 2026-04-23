@@ -1,0 +1,35 @@
+{
+  "assistaCriseApp": {
+    "offre": {
+      "home": {
+        "title": "Offres",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Offre",
+        "createOrEditLabel": "Créer ou éditer un Offre",
+        "notFound": "Aucun Offre trouvé"
+      },
+      "created": "Un nouveau Offre a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Offre avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Offre avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Offre {{ id }} ?"
+      },
+      "detail": {
+        "title": "Offre"
+      },
+      "id": "ID",
+      "titre": "Titre",
+      "description": "Description",
+      "statut": "Statut",
+      "dateCreation": "Date Creation",
+      "dateMiseAJour": "Date Mise A Jour",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "estArchivee": "Est Archivee",
+      "dateDeferencement": "Date Deferencement",
+      "crise": "Crise",
+      "aidant": "Aidant",
+      "demande": "Demande"
+    }
+  }
+}

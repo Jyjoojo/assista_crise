@@ -1,0 +1,33 @@
+{
+  "assistaCriseApp": {
+    "crise": {
+      "home": {
+        "title": "Crises",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Crise",
+        "createOrEditLabel": "Créer ou éditer un Crise",
+        "notFound": "Aucun Crise trouvé"
+      },
+      "created": "Un nouveau Crise a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Crise avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Crise avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Crise {{ id }} ?"
+      },
+      "detail": {
+        "title": "Crise"
+      },
+      "id": "ID",
+      "titre": "Titre",
+      "description": "Description",
+      "type": "Type",
+      "statut": "Statut",
+      "dateDebut": "Date Debut",
+      "dateFermeture": "Date Fermeture",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "rayonKm": "Rayon Km",
+      "declarant": "Declarant"
+    }
+  }
+}

@@ -1,0 +1,189 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-information-heading"
+        data-cy="InformationCreateUpdateHeading"
+        jhiTranslate="assistaCriseApp.information.home.createOrEditLabel"
+      >
+        Créer ou éditer un Information
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let titreRef = editForm.get('titre')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_titre" jhiTranslate="assistaCriseApp.information.titre">Titre</label>
+          <input type="text" class="form-control" name="titre" id="field_titre" data-cy="titre" formControlName="titre" />
+          @if (titreRef.invalid && (titreRef.dirty || titreRef.touched)) {
+            <div>
+              @if (editForm.get('titre')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+              @if (editForm.get('titre')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '200' }"
+                  >Ce champ doit faire au maximum 200 caractères.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let contenuRef = editForm.get('contenu')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_contenu" jhiTranslate="assistaCriseApp.information.contenu">Contenu</label>
+          <input type="text" class="form-control" name="contenu" id="field_contenu" data-cy="contenu" formControlName="contenu" />
+          @if (contenuRef.invalid && (contenuRef.dirty || contenuRef.touched)) {
+            <div>
+              @if (editForm.get('contenu')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+              @if (editForm.get('contenu')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '5000' }"
+                  >Ce champ doit faire au maximum 5000 caractères.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let datePublicationRef = editForm.get('datePublication')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_datePublication" jhiTranslate="assistaCriseApp.information.datePublication"
+            >Date Publication</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_datePublication"
+              data-cy="datePublication"
+              type="datetime-local"
+              class="form-control"
+              name="datePublication"
+              formControlName="datePublication"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (datePublicationRef.invalid && (datePublicationRef.dirty || datePublicationRef.touched)) {
+            <div>
+              @if (editForm.get('datePublication')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('datePublication')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >Ce champ doit être une date et une heure.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_dateMiseAJour" jhiTranslate="assistaCriseApp.information.dateMiseAJour"
+            >Date Mise A Jour</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateMiseAJour"
+              data-cy="dateMiseAJour"
+              type="datetime-local"
+              class="form-control"
+              name="dateMiseAJour"
+              formControlName="dateMiseAJour"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        @let estVisibleRef = editForm.get('estVisible')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_estVisible" jhiTranslate="assistaCriseApp.information.estVisible">Est Visible</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="estVisible"
+            id="field_estVisible"
+            data-cy="estVisible"
+            formControlName="estVisible"
+          />
+          @if (estVisibleRef.invalid && (estVisibleRef.dirty || estVisibleRef.touched)) {
+            <div>
+              @if (editForm.get('estVisible')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_crise" jhiTranslate="assistaCriseApp.information.crise">Crise</label>
+          <select class="form-control" id="field_crise" data-cy="crise" name="crise" formControlName="crise" [compareWith]="compareCrise">
+            @if (!editForm.get('crise')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (criseOption of crisesSharedCollection(); track $index) {
+              <option [ngValue]="criseOption">{{ criseOption.titre }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['crise'])!.invalid && (editForm.get(['crise'])!.dirty || editForm.get(['crise'])!.touched)) {
+          <div>
+            @if (editForm.get(['crise'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_auteur" jhiTranslate="assistaCriseApp.information.auteur">Auteur</label>
+          <select
+            class="form-control"
+            id="field_auteur"
+            data-cy="auteur"
+            name="auteur"
+            formControlName="auteur"
+            [compareWith]="compareUtilisateur"
+          >
+            @if (!editForm.get('auteur')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (utilisateurOption of utilisateursSharedCollection(); track $index) {
+              <option [ngValue]="utilisateurOption">{{ utilisateurOption.login }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['auteur'])!.invalid && (editForm.get(['auteur'])!.dirty || editForm.get(['auteur'])!.touched)) {
+          <div>
+            @if (editForm.get(['auteur'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span jhiTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

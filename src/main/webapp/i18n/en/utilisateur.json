@@ -1,0 +1,35 @@
+{
+  "assistaCriseApp": {
+    "utilisateur": {
+      "home": {
+        "title": "Utilisateurs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Utilisateur",
+        "createOrEditLabel": "Create or edit a Utilisateur",
+        "notFound": "No Utilisateurs found"
+      },
+      "created": "A new Utilisateur is created with identifier {{ param }}",
+      "updated": "A Utilisateur is updated with identifier {{ param }}",
+      "deleted": "A Utilisateur is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Utilisateur {{ id }}?"
+      },
+      "detail": {
+        "title": "Utilisateur"
+      },
+      "id": "ID",
+      "login": "Login",
+      "email": "Email",
+      "motDePasse": "Mot De Passe",
+      "prenom": "Prenom",
+      "nom": "Nom",
+      "telephone": "Telephone",
+      "role": "Role",
+      "actif": "Actif",
+      "dateInscription": "Date Inscription",
+      "dateBannissement": "Date Bannissement",
+      "estBanni": "Est Banni",
+      "salon": "Salon"
+    }
+  }
+}

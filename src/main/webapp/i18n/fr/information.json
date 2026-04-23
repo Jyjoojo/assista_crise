@@ -1,0 +1,30 @@
+{
+  "assistaCriseApp": {
+    "information": {
+      "home": {
+        "title": "Informations",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Information",
+        "createOrEditLabel": "Créer ou éditer un Information",
+        "notFound": "Aucun Information trouvé"
+      },
+      "created": "Un nouveau Information a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Information avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Information avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Information {{ id }} ?"
+      },
+      "detail": {
+        "title": "Information"
+      },
+      "id": "ID",
+      "titre": "Titre",
+      "contenu": "Contenu",
+      "datePublication": "Date Publication",
+      "dateMiseAJour": "Date Mise A Jour",
+      "estVisible": "Est Visible",
+      "crise": "Crise",
+      "auteur": "Auteur"
+    }
+  }
+}

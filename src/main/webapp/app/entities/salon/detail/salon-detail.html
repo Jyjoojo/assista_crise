@@ -1,0 +1,51 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (salon(); as salonRef) {
+      <div>
+        <h2 data-cy="salonDetailsHeading"><span jhiTranslate="assistaCriseApp.salon.detail.title">Salon</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ salonRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.salon.dateCreation">Date Creation</span></dt>
+          <dd>
+            <span>{{ salonRef.dateCreation | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.salon.demande">Demande</span></dt>
+          <dd>
+            @if (salon()!.demande) {
+              <div>
+                <a [routerLink]="['/demande', salon()!.demande?.id, 'view']">{{ salonRef.demande?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.salon.participant">Participant</span></dt>
+          <dd>
+            @for (participant of salonRef.participants; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/utilisateur', participant.id, 'view']">{{ participant?.login }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/salon', salonRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

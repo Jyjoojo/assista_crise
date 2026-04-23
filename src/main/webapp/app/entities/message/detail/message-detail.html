@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (message(); as messageRef) {
+      <div>
+        <h2 data-cy="messageDetailsHeading"><span jhiTranslate="assistaCriseApp.message.detail.title">Message</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ messageRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.message.contenu">Contenu</span></dt>
+          <dd>
+            <span>{{ messageRef.contenu }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.message.dateEnvoi">Date Envoi</span></dt>
+          <dd>
+            <span>{{ messageRef.dateEnvoi | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.message.estModere">Est Modere</span></dt>
+          <dd>
+            <span>{{ messageRef.estModere }}</span>
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.message.salon">Salon</span></dt>
+          <dd>
+            @if (message()!.salon) {
+              <div>
+                <a [routerLink]="['/salon', message()!.salon?.id, 'view']">{{ messageRef.salon?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="assistaCriseApp.message.auteur">Auteur</span></dt>
+          <dd>
+            @if (message()!.auteur) {
+              <div>
+                <a [routerLink]="['/utilisateur', message()!.auteur?.id, 'view']">{{ messageRef.auteur?.login }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/message', messageRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

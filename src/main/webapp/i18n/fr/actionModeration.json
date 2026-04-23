@@ -1,0 +1,11 @@
+{
+  "assistaCriseApp": {
+    "ActionModeration": {
+      "null": "",
+      "AVERTISSEMENT": "AVERTISSEMENT",
+      "SUPPRESSION_ANNONCE": "SUPPRESSION_ANNONCE",
+      "BANNISSEMENT_UTILISATEUR": "BANNISSEMENT_UTILISATEUR",
+      "EXCLUSION_TEMPORAIRE": "EXCLUSION_TEMPORAIRE"
+    }
+  }
+}

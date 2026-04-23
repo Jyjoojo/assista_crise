@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity Moderation.
+    -->
+    <changeSet id="20260423120735-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="administrateur_id"
+                                 baseTableName="moderation"
+                                 constraintName="fk_moderation__administrateur_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="utilisateur"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="demande_id"
+                                 baseTableName="moderation"
+                                 constraintName="fk_moderation__demande_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="demande"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="offre_id"
+                                 baseTableName="moderation"
+                                 constraintName="fk_moderation__offre_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="offre"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="utilisateur_cible_id"
+                                 baseTableName="moderation"
+                                 constraintName="fk_moderation__utilisateur_cible_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="utilisateur"
+                                 />
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,10 @@
+{
+  "assistaCriseApp": {
+    "StatutOffre": {
+      "null": "",
+      "DISPONIBLE": "DISPONIBLE",
+      "EN_COURS": "EN_COURS",
+      "CLOTUREE": "CLOTUREE"
+    }
+  }
+}
